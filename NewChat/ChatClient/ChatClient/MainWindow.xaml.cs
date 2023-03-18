@@ -71,9 +71,7 @@ namespace ChatClient
         private void ConnectBtn_Click(object sender, RoutedEventArgs e)
         {
             MyVievUser.Sender = nameTextBox.Text;
-
             clientService.Send(new Model.Message { Content = MyVievUser.Sender, PhotoPathSender= MyVievUser.SenderPhoto, Type = Model.MessageType.NewUser });
-            
             ConnectBtn.IsEnabled = false;
             nameTextBox.IsEnabled = false;
             UserMessageListViev.IsEnabled = true;
@@ -81,29 +79,23 @@ namespace ChatClient
             MMSGTextBox.IsEnabled=true;
             SendTextBtn.IsEnabled = true;
         }
-
-
-       
-
         private void ClientService_GetPrivate(Responce obj)
         {
-
             if (obj.Content != null)
             {
                 var time= "\t" +  DateTime.Now.Hour +":"+ DateTime.Now.Minute + "\t";
-                var vMes = new VievMessage { Message=obj.Content, Sender=obj.Sender, SenderPhoto=obj.PhotoPathSender, Time= time };
+                var vMes = new VievMessage { Message= "Приватне\t" + obj.Content, Sender=obj.Sender, SenderPhoto=obj.PhotoPathSender, Time= time };
                 ViewMessages.Add(vMes);
             }
         }
 
         private void ClientService_GetPublic(Responce obj)
         {
-
             if (obj.Content != null)
             {
                 var time = "\t" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "\t";
 
-                var vMes = new VievMessage {Message = obj.Content, Time=time, Sender = obj.Sender, SenderPhoto = obj.PhotoPathSender };
+                var vMes = new VievMessage {Message = "Публічне\t" + obj.Content, Time=time, Sender = obj.Sender, SenderPhoto = obj.PhotoPathSender };
                 ViewMessages.Add(vMes);
             }
         }
@@ -111,16 +103,24 @@ namespace ChatClient
         {
             clientService.Send(new Model.Message { Content = nameTextBox.Text, Type = Model.MessageType.Disconect });
             clientService.Stop();
-            
         }
      
         // send Public Message
         private void SendTextBtn_Click(object sender, RoutedEventArgs e)
         {
-            clientService.Send(new Model.Message { Content = MMSGTextBox.Text,Recipient = nameTextBox.Text, Type = MessageType.PublicMessage });
+            clientService.Send(new Model.Message { Content = MMSGTextBox.Text, Recipient = nameTextBox.Text, Type = MessageType.PublicMessage });
+            MMSGTextBox.Text = string.Empty;
 
         }
-
+        private void SendPrivateTextBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (UserMessageListViev.SelectedValue is VievUser vUser)
+            {
+                clientService.Send(new Model.Message { Content = MMSGTextBox.Text, Recipient = vUser.Sender, Sender = MyVievUser.Sender, PhotoPathSender = MyVievUser.SenderPhoto, Type = Model.MessageType.PrivateMessage });
+                SendPrivateTextBtn.IsEnabled = false;
+                MMSGTextBox.Text = string.Empty;
+            }
+        }
         private void ClientService_SendConnected(Responce obj)
         {
             if (obj.Sender != string.Empty)
@@ -128,7 +128,7 @@ namespace ChatClient
                 var time = "\t" + DateTime.Now.Hour + ":" + DateTime.Now.Minute +"\t";
 
                 ViewUsers.Add(new VievUser { Sender= obj.Sender, SenderPhoto=obj.PhotoPathSender });
-                var vMes = new VievMessage { Message = "До чату приєднався",Time=time, Sender = obj.Sender, SenderPhoto = obj.PhotoPathSender };
+                var vMes = new VievMessage { Message = "Приєднався до чату",Time=time, Sender = obj.Sender, SenderPhoto = obj.PhotoPathSender };
                 ViewMessages.Add(vMes);
             }
         }
@@ -137,8 +137,10 @@ namespace ChatClient
             if (obj.Sender != string.Empty)
             {
                 var time = "\t" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "\t";
-                var vMes = new VievMessage { Message = "З чату вийшов",Time= time, Sender = obj.Sender, SenderPhoto = obj.PhotoPathSender };
+                var vMes = new VievMessage { Message = "Вийшов з чату",Time= time, Sender = obj.Sender, SenderPhoto = obj.PhotoPathSender };
                 ViewMessages.Add(vMes);
+                var currentVUser = ViewUsers.First(x => x.Sender == obj.Sender);
+                ViewUsers.Remove(currentVUser);
                 //    Dispatcher.Invoke(() => { UserListViev.UpdateLayout(); });
             }
         }
@@ -148,10 +150,8 @@ namespace ChatClient
             if (obj.Sender != string.Empty)
             {
                 ViewUsers.Add(new VievUser { Sender = obj.Sender, SenderPhoto = obj.PhotoPathSender });
-
             }
         }
-
         private void AddUrlBtn_Click(object sender, RoutedEventArgs e)
         {
             if (UrlPhotoPath.Text != string.Empty)
@@ -167,8 +167,18 @@ namespace ChatClient
                 AddUrlBtn.IsEnabled = false;
                 UrlPhotoPath.IsEnabled = false;
             }
-
-
         }
+
+        private void UserMessageListViev_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MMSGTextBox.Text != string.Empty)
+            {
+                SendPrivateTextBtn.IsEnabled = true;
+            }
+        }
+
+      
+
+
     }
 }

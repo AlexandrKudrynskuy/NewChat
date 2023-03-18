@@ -7,4 +7,24 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Img\1.jpg" />
+    <None Remove="Img\2.jpg" />
+    <None Remove="Img\3.jpg" />
+    <None Remove="Img\4.jpg" />
+    <None Remove="Img\5.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Img\3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\5.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
