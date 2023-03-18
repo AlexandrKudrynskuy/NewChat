@@ -112,15 +112,7 @@ namespace ChatClient
             MMSGTextBox.Text = string.Empty;
 
         }
-        private void SendPrivateTextBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (UserMessageListViev.SelectedValue is VievUser vUser)
-            {
-                clientService.Send(new Model.Message { Content = MMSGTextBox.Text, Recipient = vUser.Sender, Sender = MyVievUser.Sender, PhotoPathSender = MyVievUser.SenderPhoto, Type = Model.MessageType.PrivateMessage });
-                SendPrivateTextBtn.IsEnabled = false;
-                MMSGTextBox.Text = string.Empty;
-            }
-        }
+   
         private void ClientService_SendConnected(Responce obj)
         {
             if (obj.Sender != string.Empty)
@@ -177,8 +169,20 @@ namespace ChatClient
             }
         }
 
-      
+        private void SendPrivateTextBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (UserMessageListViev.SelectedValue is VievUser vUser)
+            {
+                clientService.Send(new Model.Message { Content = MMSGTextBox.Text, Recipient = vUser.Sender, Sender = MyVievUser.Sender, PhotoPathSender = MyVievUser.SenderPhoto, Type = Model.MessageType.PrivateMessage });
+                
+                    var time = "\t" + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "\t";
+                    var vMes = new VievMessage { Message = "Приватне\t" + MMSGTextBox.Text, Sender = MyVievUser.Sender + "\tдля\t" + vUser.Sender, SenderPhoto = MyVievUser.SenderPhoto, Time = time };
+                    ViewMessages.Add(vMes);
+                
 
-
+                SendPrivateTextBtn.IsEnabled = false;
+                MMSGTextBox.Text = string.Empty;
+            }
+        }
     }
 }

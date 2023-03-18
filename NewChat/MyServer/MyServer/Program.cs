@@ -19,52 +19,7 @@ server.StartAsync("127.0.0.1", 2424);
 Console.ReadLine();
 
 
-//void Server_ConnectedUser(Responce arg1, User arg2)
-//{
-//    foreach (var user in listUsers)
-//    {
-//        if (user.Name != arg1.Sender)
-//        {
-//            server.SendAsync(new Responce { Content = arg2.Name, IdSender=arg1.IdSender, PhotoPathSender=arg1.PhotoPathSender, Sender = arg1.Sender, Type = ResponceType.Connected }, user);
-//        }
-//    }
-//}
 
-
-//void Server_GetAllUser(Responce arg1, User arg2)
-//{
-//    foreach (var user in listUsers)
-//    {
-//        if (user.Name != arg1.Sender)
-//        {
-//            server.SendAsync(new Responce { Content = user.Name, Sender = user.Name, PhotoPathSender = user.PhotoPath, Type = ResponceType.GetAll }, user);
-//        }
-//    }
-//}
-
-//void Server_NewUser(Responce arg1, User arg2)
-//{
-//    foreach (var user in listUsers)
-//    {
-//        if (user.Name != arg1.Sender)
-//        {
-//            server.SendAsync(new Responce { Content = arg1.Content, Sender = arg1.Sender, PhotoPathSender = arg1.PhotoPathSender, Type = ResponceType.NewUser }, user);
-//        }
-//    }
-//}
-
-//void Server_SendAll(Responce arg1, User arg2)
-//{
-//    foreach (var user in listUsers)
-//    {
-//        server.SendAsync(new Responce { Content = arg1.Content, Sender = arg1.Sender, PhotoPathSender = arg1.PhotoPathSender, Type = ResponceType.GetPublic }, user);
-//    }
-//}
-
-void Server_SendPrivate(Responce arg1, User arg2)
-{
-    server.SendAsync(new Responce { Content = arg1.Content, Sender = arg1.Sender, PhotoPathSender = arg1.PhotoPathSender, Type = ResponceType.GetPrivate }, arg2);
-}
 void Server_Disconected(Responce arg1, User arg2)
 {
     foreach (var user in listUsers)
@@ -75,10 +30,7 @@ void Server_Disconected(Responce arg1, User arg2)
         }
     }
 }
-//void Server_ServerLog(string obj)
-//{
-//    Console.WriteLine(obj);
-//}
+
 
 
 void Server_ConnectedUser(Responce arg1, User arg2)
@@ -115,6 +67,12 @@ void Server_NewUser(Responce arg1, User arg2)
     }
 }
 
+
+
+void Server_ServerLog(string obj)
+{
+    Console.WriteLine(obj);
+}
 void Server_SendAll(Responce arg1, User arg2)
 {
     foreach (var user in listUsers)
@@ -122,8 +80,7 @@ void Server_SendAll(Responce arg1, User arg2)
         server.SendAsync(new Responce { Content = arg1.Content, Sender = arg1.Sender, PhotoPathSender = arg1.PhotoPathSender, Type = ResponceType.GetPublic }, user);
     }
 }
-
-void Server_ServerLog(string obj)
+void Server_SendPrivate(Responce arg1, User arg2)
 {
-    Console.WriteLine(obj);
+    server.SendAsync(new Responce { Content = arg1.Content, Sender = arg1.Sender, PhotoPathSender = arg1.PhotoPathSender, Type = ResponceType.GetPrivate }, arg2);
 }

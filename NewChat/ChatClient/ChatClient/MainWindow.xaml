@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="MainWindow" Height="450" Width="700" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="D:\Git\Chat\NewChat\ChatClient\ChatClient\Img\4.jpg"></ImageBrush>
@@ -30,14 +30,14 @@
             <Grid Grid.Column="0" Grid.Row="0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="2">URL photo</TextBlock>
-                    <TextBox x:Name="UrlPhotoPath" Width="330" Margin="25,2"></TextBox>
+                    <TextBox x:Name="UrlPhotoPath" Width="430" Margin="25,2"></TextBox>
                     <Button x:Name="AddUrlBtn" Margin="2" Click="AddUrlBtn_Click">Add URL</Button>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="1">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="1,2">Your Name</TextBlock>
-                    <TextBox Margin="25,2" IsEnabled="False" Name="nameTextBox" Width="330"></TextBox>
+                    <TextBox Margin="25,2" IsEnabled="False" Name="nameTextBox" Width="430"></TextBox>
                     <Button Name="ConnectBtn" IsEnabled="False" Click="ConnectBtn_Click">Connect</Button>
                 </StackPanel>
             </Grid>
@@ -85,7 +85,7 @@
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Border BorderBrush="Black" BorderThickness="2" Grid.Row="0" Width="300">
+                                <Border BorderBrush="Black" BorderThickness="2" Grid.Row="0" Width="400">
                                     <StackPanel>
                                         <StackPanel Orientation="Horizontal" Opacity="0.7">
                                             <Image Source="{Binding SenderPhoto}" Width="25" Margin="2,15"></Image>

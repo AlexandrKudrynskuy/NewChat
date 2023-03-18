@@ -52,7 +52,7 @@ namespace ChatClient
                 }
                 catch (Exception ex)
                 {
-                    LogClient?.Invoke(ex.StackTrace.ToString() + "////"+ ex.Data.ToString() );
+                    MessageBox.Show($"{ex.Message}");
                     return;
                 }
             }

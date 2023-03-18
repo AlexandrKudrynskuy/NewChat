@@ -35,7 +35,7 @@ namespace MyServer
         {
             serverSocket.Bind(new IPEndPoint(IPAddress.Parse(IpAdress), port));
             ServerLog?.Invoke("serverSocket Bind");
-            serverSocket.Listen(port);
+            serverSocket.Listen(10);
             ServerLog?.Invoke("serverSocket listen");
             while (true)
             {
@@ -55,6 +55,7 @@ namespace MyServer
             {
                 var data = new byte[1024];
                 var bytes = await user.clSocket.ReceiveAsync(data, SocketFlags.None);
+                ServerLog(bytes.ToString());
                 var message = JsonSerializer.Deserialize<Message>(Encoding.ASCII.GetString(data, 0, bytes));
                 await CallbackAsync(message, user);
             }
